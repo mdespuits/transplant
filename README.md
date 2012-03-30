@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-** Will come soon... **
+**Will come soon...**
 
 ## Contributing
 

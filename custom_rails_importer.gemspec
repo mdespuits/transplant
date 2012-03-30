@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["mbridges.91@gmail.com"]
   gem.description   = %q{A Simple class to migrate data from an old system into your Rails applicaiton.}
   gem.summary       = %q{Migrate from an old application into Rails.}
-  gem.homepage      = "http://github.com/mattdbridges/custom_rails_importer"
+  gem.homepage      = "http://github.com/mattdbridges/importer"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
