@@ -1,6 +1,6 @@
-# Custom Rails Importer
+# Transplant
 
-The gem was born from a need for the organization I work for ([CollegePlus](http://collegeplus.org)). We were migrating our systems from one, single, monolithic system into a Service Oriented Architecture (SOA) using Rails and needed a way to do this as easily as possible. Thus, **Custom Rails Importer** was born.
+The gem was born from a need for the organization I work for ([CollegePlus](http://collegeplus.org)). We were migrating our systems from one, single, monolithic system into a Service Oriented Architecture (SOA) using Rails and needed a way to do this as easily as possible. Thus, **Transplant** was born.
 
 #### Currently, you can only import data from a MySQL database. I hope to have this gem be database agnostic in the future.
 
@@ -8,7 +8,7 @@ The gem was born from a need for the organization I work for ([CollegePlus](http
 
 Add this line to your application's Gemfile:
 
-    gem 'custom_rails_importer'
+    gem 'transplant'
 
 And then execute:
 
@@ -16,7 +16,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install custom_rails_importer
+    $ gem install transplant
 
 ## Usage
 
