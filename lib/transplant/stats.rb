@@ -1,8 +1,8 @@
-module Importer
+module Transplant
   class Stats
 
-    def initialize(importer)
-      @importer = importer
+    def initialize(transplanter)
+      @transplanter = importer
     end
 
     def output_all_info(opts = {})
@@ -46,7 +46,7 @@ module Importer
     end
 
     def total_import_records
-      puts "\nTotal number of records imported into myCollegePlus: #{@importer.total_records}"
+      puts "\nTotal number of records imported into myCollegePlus: #{@transplanter.total_records}"
     end
 
     def total_import_time(measurement)
@@ -55,11 +55,11 @@ module Importer
     end
 
     def failures
-      if @importer.failures.count <= 0
+      if @transplanter.failures.count <= 0
         puts "\nNo failed record imports!!!! Time to par-tay!!!!\n"
       else
-        failures = Hash[@importer.failures.map { |key, value| [key.tableize.humanize, value] }]
-        Importer::Stats.output("\nTotal number failed imports to myCollegePlus:", failures)
+        failures = Hash[@transplanter.failures.map { |key, value| [key.tableize.humanize, value] }]
+        Stats.output("\nTotal number failed imports to myCollegePlus:", failures)
       end
     end
 

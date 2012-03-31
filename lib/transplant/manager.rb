@@ -1,6 +1,4 @@
-require 'custom_rails_importer/stats'
-
-module Importer
+module Transplant
   class Manager
 
     def self.connect(credentials = {}, local_conn)
