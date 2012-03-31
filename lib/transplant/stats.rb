@@ -2,7 +2,7 @@ module Transplant
   class Stats
 
     def initialize(transplanter)
-      @transplanter = importer
+      @transplanter = transplanter
     end
 
     def output_all_info(opts = {})
@@ -46,11 +46,11 @@ module Transplant
     end
 
     def total_import_records
-      puts "\nTotal number of records imported into myCollegePlus: #{@transplanter.total_records}"
+      puts "\nTotal number of records imported into #{Manager.app_name}: #{@transplanter.total_records}"
     end
 
     def total_import_time(measurement)
-      puts "Total time taken to import everything into myCollegePlus"
+      puts "Total time taken to import everything into #{Manager.app_name}"
       puts measurement
     end
 
@@ -59,7 +59,7 @@ module Transplant
         puts "\nNo failed record imports!!!! Time to par-tay!!!!\n"
       else
         failures = Hash[@transplanter.failures.map { |key, value| [key.tableize.humanize, value] }]
-        Stats.output("\nTotal number failed imports to myCollegePlus:", failures)
+        Stats.output("\nTotal number failed imports to #{Manager.app_name}:", failures)
       end
     end
 

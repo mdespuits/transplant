@@ -1,8 +1,11 @@
 module Transplant
   class Manager
 
-    def self.connect(credentials = {}, local_conn)
-      @@remote = Mysql2::Client.new credentials
+    cattr_accessor :app_name
+
+    def self.connect(app_name, mysql_credentials = {}, local_conn)
+      @@app_name = app_name
+      @@remote = Mysql2::Client.new mysql_credentials
       @@local ||= local_conn
     end
 
