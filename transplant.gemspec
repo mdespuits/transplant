@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Matt Bridges"]
   gem.email         = ["mbridges.91@gmail.com"]
   gem.description   = %q{Transplant your data from your old database into your new Rails application}
-  gem.summary   = %q{Transplant your data from your old database into your new Rails application}
+  gem.summary       = %q{Transplant your data from your old database into your new Rails application}
   gem.homepage      = "http://github.com/mattdbridges/transplant"
 
   gem.files         = `git ls-files`.split($\)
