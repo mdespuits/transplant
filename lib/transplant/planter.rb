@@ -13,17 +13,17 @@ module Transplant
     end
 
     def save(klass, other = {})
-      nice_class_name = klass.class.to_s.tableize.humanize
+      klass_name = klass.class.to_s.tableize.humanize
       if klass.valid?
         klass.save!
         increment
         klass
       else
         increment_failure(klass.class.to_s)
-        puts "Invalid #{nice_class_name} information:"
-        Stats.output("Additional Info about #{nice_class_name}", other)
-        Stats.output("#{nice_class_name} errors", klass.errors.full_messages)
-        Stats.output("#{nice_class_name} attributes:", klass.attributes)
+        puts "Invalid #{klass_name} information:"
+        Stats.output("Additional Info about #{klass_name}", other)
+        Stats.output("#{klass_name} errors", klass.errors.full_messages)
+        Stats.output("#{klass_name} attributes:", klass.attributes)
         return false
       end
     end
