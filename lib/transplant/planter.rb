@@ -1,5 +1,5 @@
 module Transplant
-  class Manager
+  class Planter
 
     attr_accessor :app_name, :connection
 
