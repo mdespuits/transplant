@@ -8,7 +8,7 @@ module Transplant
     def output_all_info(opts = {})
       total_import_time(opts[:measurement]) if opts[:measurement].present?
       total_import_records
-      failures
+      @transplanter.failures
     end
 
     def self.output(header, input, depth = 0, sub_output = false)
@@ -46,11 +46,11 @@ module Transplant
     end
 
     def total_import_records
-      puts "\nTotal number of records imported into #{Manager.app_name}: #{@transplanter.total_records}"
+      puts "\nTotal number of records imported into #{@transplanter.app_name}: #{@transplanter.total_records}"
     end
 
     def total_import_time(measurement)
-      puts "Total time taken to import everything into #{Manager.app_name}"
+      puts "Total time taken to import everything into #{@transplanter.app_name}"
       puts measurement
     end
 
@@ -59,7 +59,7 @@ module Transplant
         puts "\nNo failed record imports!!!! Time to par-tay!!!!\n"
       else
         failures = Hash[@transplanter.failures.map { |key, value| [key.tableize.humanize, value] }]
-        Stats.output("\nTotal number failed imports to #{Manager.app_name}:", failures)
+        self.class.output("\nTotal number failed imports to #{@transplanter.app_name}:", failures)
       end
     end
 

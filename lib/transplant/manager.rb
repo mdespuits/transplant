@@ -1,19 +1,18 @@
 module Transplant
   class Manager
 
-    cattr_accessor :app_name
+    attr_accessor :app_name, :connection
 
-    def self.connect(app_name, mysql_credentials = {}, local_conn)
-      @@app_name = app_name
-      @@remote = Mysql2::Client.new mysql_credentials
-      @@local ||= local_conn
+    def initialize(app_name, connection)
+      @app_name = app_name
+      @connection = connection
     end
 
-    def self.local(sql)
-      @@local.execute sql
+    def query(sql)
+      @connection.execute sql
     end
 
-    def self.save(klass, other = {})
+    def save(klass, other = {})
       nice_class_name = klass.class.to_s.tableize.humanize
       if klass.valid?
         klass.save!
@@ -29,45 +28,42 @@ module Transplant
       end
     end
 
-    def self.remote(sql)
-      @@remote.query(sql)
+    def tables
+      return @tables if @tables.present?
+      @tables ||= @connection.tables
+      @tables.delete 'schema_migrations'
+      @tables
     end
 
-    def self.local_tables
-      tables = @@local.tables
-      tables.delete 'schema_migrations'
-      tables
+    def truncate(*tables)
+      tables.each { |table| self.query "TRUNCATE TABLE #{table.to_s}" }
     end
 
-    def self.local_truncate(*tables)
-      tables.each { |table| local "TRUNCATE TABLE #{table.to_s}" }
+    def truncate_all
+      truncate *tables
     end
 
-    def self.local_truncate_all
-      local_truncate *local_tables
+    def increment
+      @total_records ||= 0
+      @total_records += 1
     end
 
-    def self.increment
-      @@total_records ||= 0
-      @@total_records += 1
+    def increment_failure(klass_name)
+      @failures              ||= Hash.new
+      @failures[klass_name]  ||= 0
+      @failures[klass_name]  += 1
     end
 
-    def self.increment_failure(klass_name)
-      @@failures              ||= Hash.new
-      @@failures[klass_name]  ||= 0
-      @@failures[klass_name]  += 1
-    end
-
-    def self.failures
-      @@failures
+    def failures
+      @failures
     rescue
-      @@failures ||= Hash.new
+      @failures ||= Hash.new
     end
 
-    def self.total_records
-      @@total_records
+    def total_records
+      @total_records
     rescue
-      @@total_records ||= Hash.new
+      @total_records ||= Hash.new
     end
   end
 end
