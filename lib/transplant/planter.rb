@@ -17,7 +17,7 @@ module Transplant
     end
 
     def save(klass, other = {})
-      klass_name = klass.class.to_s.tableize.humanize
+      klass_name = klass.class.to_s.tableize.humanize.singularize
       if klass.valid?
         klass.save!
         increment
