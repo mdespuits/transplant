@@ -23,7 +23,7 @@ module Transplant
       puts "#{"\t"*depth}#{header}:" if hash.any?
       hash.each_pair do |key, value|
         if value.is_a? Hash
-          hash_output("", value, depth + 1, sub_hash = true)
+          hash_output(key, value, depth + 1, sub_hash = true)
         elsif value.is_a? Array
           array_output("", value, depth + 1, sub_array = true)
         else
