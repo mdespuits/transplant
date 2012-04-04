@@ -35,6 +35,10 @@ module Transplant
       @tables
     end
 
+    def column_names(table_name)
+      connection.columns(table_name).map(&:name)
+    end
+
     def truncate(*tables)
       tables.each { |table| self.query "TRUNCATE TABLE #{table.to_s}" }
     end
