@@ -6,10 +6,14 @@ module Transplant
     def initialize(app_name, connection)
       @app_name = app_name
       @connection = connection
+      @queries ||= []
+      @results ||= {}
     end
 
     def query(sql)
-      @connection.execute sql
+      return @results[sql] if @queries.include?(sql)
+      @queries << sql
+      @results[sql] = @connection.execute(sql)
     end
 
     def save(klass, other = {})
