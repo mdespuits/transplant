@@ -20,10 +20,10 @@ module Transplant
       klass_name = klass.class.to_s.tableize.humanize.singularize
       if klass.valid?
         klass.save!
-        increment
+        succeed klass_name
         klass
       else
-        increment_failure(klass.class.to_s)
+        fail(klass_name)
         puts "Invalid #{klass_name} information:"
         Stats.output("Additional Info about #{klass_name}", other)
         Stats.output("#{klass_name} errors", klass.errors.full_messages)
@@ -51,27 +51,28 @@ module Transplant
       truncate *tables
     end
 
-    def increment
-      @total_records ||= 0
-      @total_records += 1
+    def succeed(klass_name)
+      @successes              ||= Hash.new
+      @successes[klass_name]  ||= 0
+      @successes[klass_name]  += 1
     end
 
-    def increment_failure(klass_name)
+    def fail(klass_name)
       @failures              ||= Hash.new
       @failures[klass_name]  ||= 0
       @failures[klass_name]  += 1
     end
 
     def failures
-      @failures
-    rescue
       @failures ||= Hash.new
     end
 
-    def total_records
-      @total_records
-    rescue
-      @total_records ||= Hash.new
+    def successes
+      @successes ||= Hash.new
+    end
+
+    def total_successes
+      @successes.map { |table, count| count }.inject{ |sum,x| sum + x }
     end
   end
 end
