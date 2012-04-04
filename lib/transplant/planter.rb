@@ -27,7 +27,7 @@ module Transplant
         puts "Invalid #{klass_name} information:"
         Stats.output("Additional Info about #{klass_name}", other)
         Stats.output("#{klass_name} errors", klass.errors.full_messages)
-        Stats.output("#{klass_name} attributes:", klass.attributes)
+        Stats.output("#{klass_name} attributes", klass.attributes)
         return false
       end
     end
