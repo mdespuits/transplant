@@ -16,7 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Transplant::VERSION
 
   gem.add_dependency "activesupport", "~> 3.2.2"
-  gem.add_dependency "mysql2", "~> 0.3.11"
+  gem.add_dependency "activerecord", "~> 3.2.2"
   gem.add_development_dependency "rspec", "~> 2.9.0"
   gem.add_development_dependency "rake", "~> 0.9.2.2"
 end
