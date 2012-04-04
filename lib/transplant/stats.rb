@@ -46,12 +46,11 @@ module Transplant
     end
 
     def total_import_records
-      puts "\nTotal number of records imported into #{@transplanter.app_name}: #{@transplanter.total_records}"
+      puts "Estimated number of records imported into #{@transplanter.app_name}: #{@transplanter.total_records}"
     end
 
     def total_import_time(measurement)
-      puts "Total time taken to import everything into #{@transplanter.app_name}"
-      puts measurement
+      puts "Total time taken to import everything into #{@transplanter.app_name}: #{(measurement.real/60).round(2)} minutes"
     end
 
     def failures
