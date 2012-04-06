@@ -16,7 +16,7 @@ module Transplant
 
     def output_to_file
       timestamp = Time.now.utc.to_datetime.to_formatted_s(:number)
-      Dir.chdir Rails.root
+      Dir.chdir(::Transplant::Configuration.root_path)
       filepath = ".import.#{timestamp}_#{@planter.app_name.downcase}"
       f = File.open(filepath, "w")
       @result_set.each { |output| f.puts output }
