@@ -24,7 +24,9 @@ module Transplant
     end
 
     def add_to_results(output)
-      @result_set << output
+      style = ::Transplant::Configuration.output_style
+      puts output if [:both, :output].include?(style)
+      @result_set << output if [:both, :file].include?(style)
     end
 
     def output(header, input = {}, depth = 0, sub_output = false)
