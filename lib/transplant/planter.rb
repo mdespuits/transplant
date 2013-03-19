@@ -11,6 +11,14 @@ module Transplant
       @results ||= {}
     end
 
+    def failures
+      @failures ||= {}
+    end
+
+    def successes
+      @successes ||= {}
+    end
+
     def query(sql)
       return @results[sql] if @queries.include?(sql)
       @queries << sql
@@ -25,10 +33,10 @@ module Transplant
         klass
       else
         fail(klass_name)
-        @statistics.output "Invalid #{klass_name} information:"
-        @statistics.output("Additional Info about #{klass_name}", other)
-        @statistics.output("#{klass_name} errors", klass.errors.full_messages)
-        @statistics.output("#{klass_name} attributes", klass.attributes)
+        statistics.output "Invalid #{klass_name} information:"
+        statistics.output("Additional Info about #{klass_name}", other)
+        statistics.output("#{klass_name} errors", klass.errors.full_messages)
+        statistics.output("#{klass_name} attributes", klass.attributes)
         return false
       end
     end
@@ -46,7 +54,7 @@ module Transplant
     end
 
     def truncate(*tables)
-      tables.each { |table| self.query "TRUNCATE TABLE #{table.to_s}" }
+      tables.each { |t| query("TRUNCATE TABLE #{t.to_s}") }
     end
 
     def truncate_all
@@ -54,21 +62,13 @@ module Transplant
     end
 
     def succeed(klass_name)
-      successes[klass_name]  ||= 0
-      successes[klass_name]  += 1
+      successes[klass_name] ||= 0
+      successes[klass_name] += 1
     end
 
     def fail(klass_name)
-      failures[klass_name]  ||= 0
-      failures[klass_name]  += 1
-    end
-
-    def failures
-      @failures ||= {}
-    end
-
-    def successes
-      @successes ||= {}
+      failures[klass_name] ||= 0
+      failures[klass_name] += 1
     end
 
     def total_successes
