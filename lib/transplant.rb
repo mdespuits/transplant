@@ -1,8 +1,8 @@
 require 'active_support/all'
 
-%w[version configuration stats planter].each do |klass|
-  require "transplant/#{klass}"
-end
+require 'transplan/configuration'
+require 'transplan/stats'
+require 'transplan/planter'
 
 Transplant::Configuration.setup do |config|
   config.root_path = Rails.root if defined?(Rails)
