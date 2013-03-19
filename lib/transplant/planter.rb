@@ -1,7 +1,7 @@
 module Transplant
   class Planter
 
-    attr_accessor :app_name, :connection, :statistician
+    attr_reader :app_name, :connection, :statistician
 
     def initialize(app_name, connection)
       @app_name = app_name
@@ -14,7 +14,7 @@ module Transplant
     def query(sql)
       return @results[sql] if @queries.include?(sql)
       @queries << sql
-      @results[sql] = @connection.execute(sql)
+      @results[sql] = connection.execute(sql)
     end
 
     def save(klass, other = {})
@@ -34,10 +34,11 @@ module Transplant
     end
 
     def tables
-      return @tables if @tables.present?
-      @tables ||= @connection.tables
-      @tables.delete 'schema_migrations'
-      @tables
+      @tables ||= begin
+        tmp = connection.tables
+        tmp.delete 'schema_migrations'
+        tmp
+      end
     end
 
     def column_names(table_name)
@@ -53,27 +54,25 @@ module Transplant
     end
 
     def succeed(klass_name)
-      @successes              ||= Hash.new
-      @successes[klass_name]  ||= 0
-      @successes[klass_name]  += 1
+      successes[klass_name]  ||= 0
+      successes[klass_name]  += 1
     end
 
     def fail(klass_name)
-      @failures              ||= Hash.new
-      @failures[klass_name]  ||= 0
-      @failures[klass_name]  += 1
+      failures[klass_name]  ||= 0
+      failures[klass_name]  += 1
     end
 
     def failures
-      @failures ||= Hash.new
+      @failures ||= {}
     end
 
     def successes
-      @successes ||= Hash.new
+      @successes ||= {}
     end
 
     def total_successes
-      @successes.map { |table, count| count }.inject{ |sum,x| sum + x }
+      successes.map { |table, count| count }.inject{ |sum,x| sum + x }
     end
   end
 end
