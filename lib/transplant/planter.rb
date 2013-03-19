@@ -31,13 +31,14 @@ module Transplant
         klass.save!
         succeed klass_name
         klass
+        true
       else
         fail(klass_name)
         statistics.output "Invalid #{klass_name} information:"
         statistics.output("Additional Info about #{klass_name}", other)
         statistics.output("#{klass_name} errors", klass.errors.full_messages)
         statistics.output("#{klass_name} attributes", klass.attributes)
-        return false
+        false
       end
     end
 
