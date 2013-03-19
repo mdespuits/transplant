@@ -16,11 +16,12 @@ module Transplant
 
     def output_to_file
       timestamp = Time.now.utc.to_datetime.to_formatted_s(:number)
-      Dir.chdir(::Transplant::Configuration.root_path)
-      filepath = ".import.#{timestamp}_#{@planter.app_name.downcase}"
-      f = File.open(filepath, "w")
-      @result_set.each { |output| f.puts output }
-      f.close
+      Dir.chdir(::Transplant::Configuration.root_path) do
+        filepath = ".import.#{timestamp}_#{@planter.app_name.downcase}"
+        f = File.open(filepath, "w")
+        @result_set.each { |output| f.puts output }
+        f.close
+      end
     end
 
     def add_to_results(output)
