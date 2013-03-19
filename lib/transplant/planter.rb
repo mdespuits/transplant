@@ -1,12 +1,12 @@
 module Transplant
   class Planter
 
-    attr_reader :app_name, :connection, :statistician
+    attr_reader :app_name, :connection, :statistics
 
     def initialize(app_name, connection)
       @app_name = app_name
       @connection = connection
-      @statistician = Stats.new(self)
+      @statistics = Stats.new(self)
       @queries ||= []
       @results ||= {}
     end
@@ -25,10 +25,10 @@ module Transplant
         klass
       else
         fail(klass_name)
-        @statistician.output "Invalid #{klass_name} information:"
-        @statistician.output("Additional Info about #{klass_name}", other)
-        @statistician.output("#{klass_name} errors", klass.errors.full_messages)
-        @statistician.output("#{klass_name} attributes", klass.attributes)
+        @statistics.output "Invalid #{klass_name} information:"
+        @statistics.output("Additional Info about #{klass_name}", other)
+        @statistics.output("#{klass_name} errors", klass.errors.full_messages)
+        @statistics.output("#{klass_name} attributes", klass.attributes)
         return false
       end
     end
